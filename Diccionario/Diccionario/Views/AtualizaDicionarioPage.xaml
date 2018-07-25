@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Diccionario.Views.AtualizaDicionarioPage">
+    <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+        <Entry Text="{Binding Palavra}" Placeholder="Palavra" x:Name="Palavra" Completed="PalavraCompleted" Keyboard="Chat"/>
+        <Entry Text="{Binding Significado}" Placeholder="Significado" x:Name="Significado" Completed="SignificadoCompleted" Keyboard="Chat"/>
+        <Button Text="Actualización del diccionario" Command="{Binding AtualizaCommand}" />
+</StackLayout>
+</ContentPage>
