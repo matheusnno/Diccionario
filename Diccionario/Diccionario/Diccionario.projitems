@@ -37,6 +37,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\ISQLite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\IFileHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\TodoItemDatabase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\ObservableGroupCollection.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Views\" />

@@ -1,14 +1,33 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
 using Diccionario.Models;
 using Xamarin.Forms;
+using System.Collections.Generic;
+using Diccionario.Services;
 
 namespace Diccionario.ViewModels
 {
     public class DicionarioViewModel : BaseViewModel
     {
-        public ObservableCollection<Dicionario> Results { get; }
+
+        #region GroupListView
+
+        public IList<Dicionario> Items { get; private set; }
+
+        private List<ObservableGroupCollection<string, Dicionario>> _groupedData;
+        public List<ObservableGroupCollection<string, Dicionario>> GroupedData
+        {
+            get { return _groupedData; }
+            set
+            {
+                if (SetProperty(ref _groupedData, value))
+                {
+                    BuscaPalavras();
+                }
+            }
+        }
+
+        #endregion
 
         private string _palavra;
         public string Palavra
@@ -42,7 +61,6 @@ namespace Diccionario.ViewModels
             ShowItemSelectedCommand = new Command<Dicionario>(ExecuteShowItemSelectedCommand);
             DeleteItemCommand = new Command<Dicionario>(ExecuteDeleteItemCommand);
 
-            Results = new ObservableCollection<Dicionario>();
             BuscaPalavras();
         }
 
@@ -73,12 +91,15 @@ namespace Diccionario.ViewModels
             IsBusy = true;
 
             var res = App.DAUtil.GetSomeData(Palavra);
-            var resOrdered = res.OrderBy(t => t.Palavra);
-            Results.Clear();
-            foreach (var i in resOrdered)
-            {
-                Results.Add(i);
-            }
+            Items = res.OrderBy(t => t.Palavra).ToList();
+
+            #region Grouped
+
+            GroupedData = Items.OrderBy(p => p.Palavra)
+                               .GroupBy(p => p.Palavra[0].ToString())
+                               .Select(p => new ObservableGroupCollection<string, Dicionario>(p)).ToList();
+
+            #endregion
 
             IsBusy = false;
         }

@@ -3,9 +3,12 @@
     <StackLayout>
     <Entry Text="{Binding Palavra}" Placeholder="Búsqueda" Keyboard="Chat" x:Name="Busca"/>
     <ListView 
-        HasUnevenRows="true"
+        HasUnevenRows="false"
         SeparatorVisibility="Default"
-        ItemsSource="{Binding Results}" 
+        IsGroupingEnabled="true"
+        GroupDisplayBinding="{Binding Key}"
+        GroupShortNameBinding="{Binding Key}"
+        ItemsSource="{Binding GroupedData}" 
         ItemSelected="Handle_ItemSelected"
         CachingStrategy="RecycleElement"
         x:Name="Lista">
